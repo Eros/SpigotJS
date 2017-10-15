@@ -62,7 +62,13 @@ var SpigotPluginManager = {
                 if(pluginEntry.source == "spigot" && pluginEntry.id == plugin["id"]){
                     if(plugin.version.id !== pluginEntry.version){
                         console.log("Update found for plugin: " + plugin["name"]);
+                    } else {
+                        console.log("No update found for plugin: " + plugin["name"]);
+                        cb();
+                        return false;
                     }
+                    pluginList[i].version = plugin.version.id;
+                    break;
                 }
             }
         })
