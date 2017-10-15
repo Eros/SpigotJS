@@ -71,6 +71,10 @@ var SpigotPluginManager = {
                     break;
                 }
             }
+            fs.writeFile(__dirname + "/../configs/plugins.json", JSON.stringify(pluginList), 
+            function(){
+                //nothing needs to be here.............i think
+            });
         })
     }
 }
