@@ -86,10 +86,22 @@ var SpigotPluginManager = {
                     return console.log("Error");
                 } else {
                     console.log("Downloading " + plugin["name"] + " from " + download);
-                    
+                    var strean = fs.createWriteStream(plugin + plugin["name"] + ".jar");
+                    stream.write(body);
+                    stream.end();
+                    console.log("Saved plugin");
+                    cb();
                 }
-            })
+            });
+            } else {
+                if(plugin["name"] == undefined){
+                    console.log("Plugin not found");
+                } else {
+                    console.log(plugin["name"] + " was from an external source. Can't be downloaded");
+                }
+                cb(true);
             }
         })
     }
-}
+};
+module.exports = SpigotPluginManager;
