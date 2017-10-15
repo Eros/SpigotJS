@@ -75,6 +75,21 @@ var SpigotPluginManager = {
             function(){
                 //nothing needs to be here.............i think
             });
+            if(plugin["external"] == false){
+                var download = "https://spigotmc.org"/ + plugin.file.url;
+                console.log("Downloading spigot" + download);
+                cloudscrapper.request({method: "GET",
+                url: download,
+            encoding: null}, function(err, response, body){
+                if(error){
+                    cb();
+                    return console.log("Error");
+                } else {
+                    console.log("Downloading " + plugin["name"] + " from " + download);
+                    
+                }
+            })
+            }
         })
     }
 }
