@@ -33,6 +33,48 @@ server.start = function(cb){
         "--spigot-settings", server.configDir + "spigot.yml"
     ],{
         cwd : server.path
-    })
+    });
+
+    server.proc.on('exit', function(){
+        server.proc = null;
+        eventEmitter.emit('stop');
+    });
+
+    eventEmitter.emit('start');
+    } else {
+        console.log("Server is running");
     }
-}
+    if(cb !== undefined)
+        cb();
+};
+    server.stop = function(cb){
+        if(server.proc !== null){
+            server.proc.stdin.write('stop\n');
+            if(cb !== undefined){
+                eventEmitter.once("stop", function(){
+                    server.proc = null;
+                });
+                eventEmitter.once("stop", cb);
+            }
+        } else {
+            console.log("Server is not running");
+            if(cb !== undefined)
+                cb();
+        }
+    };
+server.on = function(event, callback){
+    eventEmitter.o(event, callback);
+};
+server.once = function(event, callback){
+ eventEmitter.once(event, callback);
+};
+
+server.onLog = function(cmd){
+    if(server.proc !== null){
+        server.proc.stdin.write(cmd + "\n");
+    } else {
+        console.log("Server is not running");
+    }
+};
+
+module.exports = server;
