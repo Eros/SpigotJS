@@ -53,5 +53,5 @@ buildtools.run = function(cb){
                     callback();
                 });
             }
-    ,], cb);
+    ], cb);
 }
